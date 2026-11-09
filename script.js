@@ -35,6 +35,15 @@ navLinks.forEach((link) => {
 
 
 // =========================================
+// 2B. BOUNCING NAME DELAYS
+// =========================================
+
+document.querySelectorAll(".animated-name span:not(.space)").forEach((letter, i) => {
+    letter.style.animationDelay = `${i * 0.07}s`;
+});
+
+
+// =========================================
 // 3. AUTOMATIC COPYRIGHT YEAR
 // =========================================
 
@@ -90,3 +99,38 @@ if (backToTop) {
         });
     });
 }
+
+
+// =========================================
+// 7. PROJECT IMAGE VIEWER
+// =========================================
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const lightboxClose = document.getElementById("lightboxClose");
+
+function closeLightbox() {
+    lightbox.classList.remove("open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+}
+
+document.querySelectorAll("[data-full]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+        lightboxImg.src = btn.dataset.full;
+        lightboxImg.alt = btn.dataset.alt || "";
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+    });
+});
+
+lightboxClose.addEventListener("click", closeLightbox);
+
+lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeLightbox();
+});
